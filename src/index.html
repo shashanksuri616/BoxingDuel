@@ -1,1 +1,62 @@
-Please provide the code for the file: /boxing-duel-pixel-punch-arena/boxing-duel-pixel-punch-arena/src/index.html.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=900, initial-scale=1.0">
+  <title>Boxing Duel: Pixel Punch Arena</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- Google Fonts: Press Start 2P -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Start Screen -->
+  <div id="start-screen" class="screen">
+    <div class="title-logo">
+      <img src="assets/sprites/glove_logo.png" alt="Boxing Glove Logo" class="logo">
+      <h1>BOXING DUEL:<br>PIXEL PUNCH ARENA</h1>
+    </div>
+    <button id="start-btn" class="btn">START FIGHT</button>
+    <div class="start-bg-anim"></div>
+    <audio id="bg-music" src="assets/sounds/bg_music.mp3" loop></audio>
+  </div>
+
+  <!-- Arena / Fight Screen -->
+  <div id="arena-screen" class="screen" style="display:none;">
+    <div class="arena-bg"></div>
+    <div class="health-bars">
+      <div class="hp-container p1">
+        <span class="hp-label">PLAYER 1</span>
+        <div class="hp-bar">
+          <div class="hp-fill" id="hp1"></div>
+        </div>
+      </div>
+      <div class="hp-container p2">
+        <span class="hp-label">PLAYER 2</span>
+        <div class="hp-bar">
+          <div class="hp-fill" id="hp2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="arena" id="arena">
+      <div class="fighter" id="fighter1"></div>
+      <div class="fighter" id="fighter2"></div>
+      <div id="damage-float-1" class="damage-float"></div>
+      <div id="damage-float-2" class="damage-float"></div>
+      <div id="ko-text" class="ko-text"></div>
+    </div>
+    <div class="footer-text">Press <b>A</b> / <b>L</b> to Punch</div>
+    <audio id="punch-sound" src="assets/sounds/punch.wav"></audio>
+    <audio id="hit-sound" src="assets/sounds/hit.wav"></audio>
+    <audio id="ko-sound" src="assets/sounds/ko.wav"></audio>
+    <audio id="victory-sound" src="assets/sounds/victory.mp3"></audio>
+  </div>
+
+  <!-- End/Restart Overlay -->
+  <div id="end-overlay" class="overlay" style="display:none;">
+    <div id="winner-text" class="winner-text"></div>
+    <button id="restart-btn" class="btn">RESTART?</button>
+  </div>
+
+  <script src="scripts/game.js"></script>
+</body>
+</html>
