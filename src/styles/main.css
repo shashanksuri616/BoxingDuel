@@ -1,1 +1,278 @@
-Please provide the code for the file: /boxing-duel-pixel-punch-arena/src/styles/main.css.
+/* === General Styles === */
+body {
+  background: linear-gradient(#1e1e2f, #2b2b52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Press Start 2P', monospace;
+  color: #f1f2f6;
+  margin: 0;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  width: 900px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 16px;
+  image-rendering: pixelated;
+}
+
+h1 {
+  font-size: 48px;
+  text-align: center;
+  color: #f1f2f6;
+  text-shadow: 3px 3px #222, 0 0 8px #2b2b52;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.btn {
+  background: #ff4757;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Press Start 2P', monospace;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 32px;
+  box-shadow: 0 4px #222;
+  text-shadow: 1px 1px #222;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+  background: #ff6b81;
+  transform: scale(1.05);
+}
+
+.start-bg-anim {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: url('../assets/sprites/crowd_bg.png') repeat-x center/cover;
+  animation: crowdLoop 8s linear infinite;
+  opacity: 0.25;
+}
+
+@keyframes crowdLoop {
+  0% { background-position-x: 0; }
+  100% { background-position-x: -400px; }
+}
+
+/* === Arena Styles === */
+.arena-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('../assets/sprites/ring_pixel.png') center/cover no-repeat;
+  z-index: 0;
+  border: 8px solid #444;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.arena {
+  position: relative;
+  width: 900px;
+  height: 500px;
+  z-index: 1;
+}
+
+.fighter {
+  position: absolute;
+  bottom: 100px;
+  width: 100px;
+  height: 120px;
+  transition: transform 0.2s;
+  image-rendering: pixelated;
+}
+
+#fighter1 {
+  left: 120px;
+}
+
+#fighter2 {
+  right: 120px;
+  transform: scaleX(-1);
+}
+
+.health-bars {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hp-container {
+  width: 350px;
+  height: 20px;
+  background: #555;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  gap: 8px;
+}
+
+.hp-label {
+  font-size: 14px;
+  color: #f1f2f6;
+  text-shadow: 1px 1px #222;
+  min-width: 90px;
+}
+
+.hp-bar {
+  flex: 1;
+  height: 14px;
+  background: #333;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-left: 6px;
+}
+
+.hp-fill {
+  height: 100%;
+  width: 100%;
+  transition: width 0.4s linear;
+}
+
+.p1 .hp-fill {
+  background: linear-gradient(90deg, #ff6b6b, #c0392b);
+}
+
+.p2 .hp-fill {
+  background: linear-gradient(90deg, #70a1ff, #1e90ff);
+}
+
+.footer-text {
+  position: absolute;
+  bottom: 18px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #f1f2f6;
+  text-shadow: 1px 1px #222;
+  letter-spacing: 1px;
+  z-index: 3;
+}
+
+/* === KO & Overlay === */
+.ko-text {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  font-size: 96px;
+  color: #fffa65;
+  text-shadow: 3px 3px #222, 0 0 12px #fffa65;
+  opacity: 0;
+  pointer-events: none;
+  animation: none;
+  z-index: 10;
+}
+
+.overlay {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(30,30,47,0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.winner-text {
+  font-size: 40px;
+  color: #fffa65;
+  text-shadow: 2px 2px #222;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+
+/* === Damage Float === */
+.damage-float {
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  transform: translate(-50%, 0);
+  font-size: 28px;
+  color: #ff4757;
+  text-shadow: 2px 2px #222;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9;
+  font-family: 'Press Start 2P', monospace;
+  font-weight: bold;
+}
+
+/* === Animations === */
+@keyframes punch {
+  0% { transform: translateX(0); }
+  30% { transform: translateX(30px); }
+  60% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes punch-left {
+  0% { transform: translateX(0); }
+  30% { transform: translateX(-30px); }
+  60% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes hitFlash {
+  0%, 100% { filter: none; }
+  50% { filter: brightness(2) saturate(2); }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-8px); }
+  80% { transform: translateX(8px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes breathing {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
