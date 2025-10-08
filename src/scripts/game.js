@@ -1,3 +1,9 @@
+// Main game logic, now using modules
+
+import { Player } from './player.js';
+import { setupInput } from './input.js';
+import { randomDamage, playSound } from './utils.js';
+
 // --- DOM Elements ---
 const startScreen = document.getElementById('start-screen');
 const arenaScreen = document.getElementById('arena-screen');
@@ -21,17 +27,12 @@ const koSound = document.getElementById('ko-sound');
 const victorySound = document.getElementById('victory-sound');
 
 // --- Game State ---
-let player1 = { hp: 100, canPunch: true };
-let player2 = { hp: 100, canPunch: true };
+const player1 = new Player('PLAYER 1', '#ff4757');
+const player2 = new Player('PLAYER 2', '#1e90ff');
 let gameActive = false;
 const PUNCH_COOLDOWN = 700; // ms
 
 // --- Utility Functions ---
-function setHP(player, value) {
-  player.hp = Math.max(0, value);
-  updateHPBar();
-}
-
 function updateHPBar() {
   hp1.style.width = player1.hp + '%';
   hp2.style.width = player2.hp + '%';
@@ -48,11 +49,6 @@ function showDamage(playerNum, dmg) {
     float.style.opacity = 0;
     float.style.top = '10px';
   }, 50);
-}
-
-function playSound(audio) {
-  audio.currentTime = 0;
-  audio.play();
 }
 
 function animateFighterPunch(fighter, isLeft) {
@@ -79,10 +75,8 @@ function animateKO() {
 }
 
 function resetFighters() {
-  player1.hp = 100;
-  player2.hp = 100;
-  player1.canPunch = true;
-  player2.canPunch = true;
+  player1.reset();
+  player2.reset();
   updateHPBar();
   koText.textContent = '';
   koText.style.opacity = 0;
@@ -126,18 +120,18 @@ function restartGame() {
 // --- Combat Logic ---
 function handlePunch(playerNum) {
   if (!gameActive) return;
-  if (playerNum === 1 && player1.canPunch && player2.hp > 0) {
+  if (playerNum === 1 && player1.canPunch && player2.isAlive()) {
     player1.canPunch = false;
     animateFighterPunch(fighter1, true);
     playSound(punchSound);
     setTimeout(() => {
-      // Always in range, apply random damage
-      const dmg = Math.floor(Math.random() * 11) + 5; // 5-15
-      setHP(player2, player2.hp - dmg);
+      const dmg = randomDamage();
+      player2.setHP(player2.hp - dmg);
+      updateHPBar();
       showDamage(1, dmg);
       animateFighterHit(fighter2);
       playSound(hitSound);
-      if (player2.hp <= 0) {
+      if (!player2.isAlive()) {
         animateKO();
         playSound(koSound);
         setTimeout(() => {
@@ -148,17 +142,18 @@ function handlePunch(playerNum) {
     }, 120);
     setTimeout(() => { player1.canPunch = true; }, PUNCH_COOLDOWN);
   }
-  if (playerNum === 2 && player2.canPunch && player1.hp > 0) {
+  if (playerNum === 2 && player2.canPunch && player1.isAlive()) {
     player2.canPunch = false;
     animateFighterPunch(fighter2, false);
     playSound(punchSound);
     setTimeout(() => {
-      const dmg = Math.floor(Math.random() * 11) + 5;
-      setHP(player1, player1.hp - dmg);
+      const dmg = randomDamage();
+      player1.setHP(player1.hp - dmg);
+      updateHPBar();
       showDamage(2, dmg);
       animateFighterHit(fighter1);
       playSound(hitSound);
-      if (player1.hp <= 0) {
+      if (!player1.isAlive()) {
         animateKO();
         playSound(koSound);
         setTimeout(() => {
@@ -172,11 +167,7 @@ function handlePunch(playerNum) {
 }
 
 // --- Input Handling ---
-document.addEventListener('keydown', (e) => {
-  if (!gameActive) return;
-  if (e.code === 'KeyA') handlePunch(1);
-  if (e.code === 'KeyL') handlePunch(2);
-});
+setupInput(handlePunch);
 
 // --- Button Events ---
 startBtn.addEventListener('click', startGame);
@@ -199,3 +190,5 @@ koText.textContent = '';
 koText.style.opacity = 0;
 damageFloat1.style.opacity = 0;
 damageFloat2.style.opacity = 0;
+
+//# sourceMappingURL=sourcemaps/game.js.map
