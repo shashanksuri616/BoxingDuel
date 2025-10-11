@@ -16,6 +16,7 @@
       <h1>BOXING DUEL:<br>PIXEL PUNCH ARENA</h1>
     </div>
     <button id="start-btn" class="btn">START FIGHT</button>
+    <button id="settings-btn" class="btn" style="margin-top:12px;">SETTINGS / CREDITS</button>
     <div class="start-bg-anim"></div>
     <audio id="bg-music" src="assets/sounds/bg_music.mp3" loop></audio>
   </div>
@@ -55,6 +56,18 @@
   <div id="end-overlay" class="overlay" style="display:none;">
     <div id="winner-text" class="winner-text"></div>
     <button id="restart-btn" class="btn">RESTART?</button>
+  </div>
+
+  <!-- Settings Screen -->
+  <div id="settings-screen" class="overlay" style="display:none;">
+    <div class="winner-text" style="font-size:28px;">SETTINGS & CREDITS</div>
+    <div style="margin-bottom:24px; font-size:13px;">
+      <b>Controls:</b> Player 1: A &nbsp;|&nbsp; Player 2: L<br>
+      <b>Art & Code:</b> Your Name<br>
+      <b>Music/SFX:</b> Placeholder or Kenney.nl<br>
+      <b>Font:</b> Press Start 2P (Google Fonts)
+    </div>
+    <button id="close-settings-btn" class="btn">BACK</button>
   </div>
 
   <script type="module" src="scripts/game.js"></script>
