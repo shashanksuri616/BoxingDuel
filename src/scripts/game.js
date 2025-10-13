@@ -191,4 +191,17 @@ koText.style.opacity = 0;
 damageFloat1.style.opacity = 0;
 damageFloat2.style.opacity = 0;
 
-//# sourceMappingURL=sourcemaps/game.js.map
+// --- Settings/Credits Screen Logic ---
+const settingsBtn = document.getElementById('settings-btn');
+const settingsScreen = document.getElementById('settings-screen');
+const closeSettingsBtn = document.getElementById('close-settings-btn');
+
+settingsBtn.addEventListener('click', () => {
+  startScreen.style.display = 'none';
+  settingsScreen.style.display = 'flex';
+});
+
+closeSettingsBtn.addEventListener('click', () => {
+  settingsScreen.style.display = 'none';
+  startScreen.style.display = 'flex';
+});
