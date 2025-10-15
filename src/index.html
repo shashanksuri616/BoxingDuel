@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -70,6 +70,116 @@
     <button id="close-settings-btn" class="btn">BACK</button>
   </div>
 
+  <script type="module" src="scripts/game.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=900, initial-scale=1.0">
+  <meta name="description" content="Boxing Duel: Pixel Punch Arena — a retro-style 2-player boxing game. Test your reflexes and punch your way to victory!">
+  <meta name="theme-color" content="#1e1e2e">
+  <meta name="author" content="Your Name">
+
+  <title>Boxing Duel: Pixel Punch Arena</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/main.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/sprites/glove_logo.png">
+</head>
+<body>
+  <!-- =======================
+       START SCREEN
+  ======================== -->
+  <main id="start-screen" class="screen" role="main" aria-labelledby="game-title">
+    <div class="title-logo">
+      <img src="assets/sprites/glove_logo.png" alt="Boxing glove logo" class="logo" draggable="false">
+      <h1 id="game-title">BOXING DUEL:<br><span class="sub">PIXEL PUNCH ARENA</span></h1>
+    </div>
+
+    <nav class="menu">
+      <button id="start-btn" class="btn primary">START FIGHT</button>
+      <button id="settings-btn" class="btn secondary">SETTINGS / CREDITS</button>
+    </nav>
+
+    <div class="start-bg-anim" aria-hidden="true"></div>
+    <audio id="bg-music" src="assets/sounds/bg_music.mp3" loop preload="auto"></audio>
+  </main>
+
+  <!-- =======================
+       ARENA / FIGHT SCREEN
+  ======================== -->
+  <section id="arena-screen" class="screen" style="display:none;" aria-label="Game Arena">
+    <div class="arena-bg" aria-hidden="true"></div>
+
+    <header class="health-bars">
+      <div class="hp-container p1">
+        <span class="hp-label">PLAYER 1</span>
+        <div class="hp-bar">
+          <div class="hp-fill" id="hp1"></div>
+        </div>
+      </div>
+      <div class="hp-container p2">
+        <span class="hp-label">PLAYER 2</span>
+        <div class="hp-bar">
+          <div class="hp-fill" id="hp2"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="arena" id="arena">
+      <div class="fighter" id="fighter1" aria-label="Player 1 fighter sprite"></div>
+      <div class="fighter" id="fighter2" aria-label="Player 2 fighter sprite"></div>
+      <div id="damage-float-1" class="damage-float"></div>
+      <div id="damage-float-2" class="damage-float"></div>
+      <div id="ko-text" class="ko-text"></div>
+    </div>
+
+    <footer class="footer-text">
+      Press <kbd>A</kbd> / <kbd>L</kbd> to Punch
+    </footer>
+
+    <!-- Audio FX -->
+    <audio id="punch-sound" src="assets/sounds/punch.wav" preload="auto"></audio>
+    <audio id="hit-sound" src="assets/sounds/hit.wav" preload="auto"></audio>
+    <audio id="ko-sound" src="assets/sounds/ko.wav" preload="auto"></audio>
+    <audio id="victory-sound" src="assets/sounds/victory.mp3" preload="auto"></audio>
+  </section>
+
+  <!-- =======================
+       END / RESTART OVERLAY
+  ======================== -->
+  <section id="end-overlay" class="overlay" role="dialog" aria-modal="true" style="display:none;">
+    <div id="winner-text" class="winner-text"></div>
+    <button id="restart-btn" class="btn primary">RESTART MATCH</button>
+  </section>
+
+  <!-- =======================
+       SETTINGS / CREDITS
+  ======================== -->
+  <section id="settings-screen" class="overlay" role="dialog" aria-modal="true" style="display:none;">
+    <div class="winner-text" style="font-size:28px;">SETTINGS & CREDITS</div>
+
+    <div class="credits">
+      <p><b>Controls:</b> Player 1 – <kbd>A</kbd> | Player 2 – <kbd>L</kbd></p>
+      <p><b>Art & Code:</b> Your Name</p>
+      <p><b>Music/SFX:</b> Placeholder or <a href="https://kenney.nl/assets" target="_blank" rel="noopener noreferrer">Kenney.nl</a></p>
+      <p><b>Font:</b> <a href="https://fonts.google.com/specimen/Press+Start+2P" target="_blank" rel="noopener noreferrer">Press Start 2P</a></p>
+    </div>
+
+    <button id="close-settings-btn" class="btn secondary">BACK TO MENU</button>
+  </section>
+
+  <!-- =======================
+       SCRIPTS
+  ======================== -->
   <script type="module" src="scripts/game.js"></script>
 </body>
 </html>
