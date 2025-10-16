@@ -1,16 +1,37 @@
-/* === General Styles === */
+/* ==========================================================
+   PIXEL PUNCH ARENA — Professional Retro Arcade Theme
+   Author: Your Name
+   Version: 2.0
+   ========================================================== */
+
+/* === GLOBAL STYLES === */
+:root {
+  --p1-color: #ff4757;
+  --p2-color: #1e90ff;
+  --accent-yellow: #fffa65;
+  --dark-bg: #1e1e2f;
+  --deep-blue: #2b2b52;
+  --shadow: #151523;
+  --border-light: #ffffff33;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at center, var(--deep-blue), var(--dark-bg) 85%);
+  font-family: 'Press Start 2P', monospace;
+  color: #f1f2f6;
+  user-select: none;
+}
+
 body {
-  background: linear-gradient(#1e1e2f, #2b2b52);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  font-family: 'Press Start 2P', monospace;
-  color: #f1f2f6;
-  margin: 0;
-  overflow: hidden;
 }
 
+/* === SCREENS === */
 .screen {
   position: absolute;
   width: 900px;
@@ -19,53 +40,78 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 4px solid var(--border-light);
+  border-radius: 10px;
+  box-shadow: 0 0 20px #000000aa, inset 0 0 20px #00000055;
+  overflow: hidden;
 }
 
+/* === TITLE LOGO === */
 .title-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 40px;
+  text-align: center;
 }
 
 .logo {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 16px;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 18px;
   image-rendering: pixelated;
+  filter: drop-shadow(0 0 8px var(--accent-yellow));
 }
 
 h1 {
-  font-size: 48px;
-  text-align: center;
+  font-size: 42px;
   color: #f1f2f6;
-  text-shadow: 3px 3px #222, 0 0 8px #2b2b52;
-  margin: 0;
+  text-shadow: 3px 3px var(--shadow), 0 0 10px var(--accent-yellow);
   letter-spacing: 2px;
+  line-height: 1.4;
 }
 
+.sub {
+  font-size: 28px;
+  color: var(--accent-yellow);
+}
+
+/* === BUTTONS === */
 .btn {
-  background: #ff4757;
   border: none;
-  padding: 14px 40px;
+  padding: 14px 36px;
   border-radius: 6px;
-  color: #fff;
-  font-size: 16px;
-  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
   font-weight: bold;
   letter-spacing: 1px;
   cursor: pointer;
-  margin-top: 32px;
-  box-shadow: 0 4px #222;
-  text-shadow: 1px 1px #222;
-  transition: background 0.3s, transform 0.2s;
+  font-family: 'Press Start 2P', monospace;
+  text-shadow: 1px 1px var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+  box-shadow: 0 4px var(--shadow);
+}
+
+.btn.primary {
+  background: var(--p1-color);
+  color: #fff;
+}
+
+.btn.secondary {
+  background: #747d8c;
+  color: #fff;
 }
 
 .btn:hover {
-  background: #ff6b81;
   transform: scale(1.05);
+  box-shadow: 0 0 12px var(--accent-yellow);
 }
 
+.btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 0 6px #000;
+}
+
+/* === BACKGROUND ANIMATION === */
 .start-bg-anim {
   position: absolute;
   z-index: -1;
@@ -74,23 +120,24 @@ h1 {
   background: url('../assets/sprites/crowd_bg.png') repeat-x center/cover;
   animation: crowdLoop 8s linear infinite;
   opacity: 0.25;
+  filter: blur(1px);
 }
 
 @keyframes crowdLoop {
-  0% { background-position-x: 0; }
-  100% { background-position-x: -400px; }
+  from { background-position-x: 0; }
+  to { background-position-x: -400px; }
 }
 
-/* === Arena Styles === */
+/* === ARENA STYLES === */
 .arena-bg {
   position: absolute;
   width: 100%;
   height: 100%;
   background: url('../assets/sprites/ring_pixel.png') center/cover no-repeat;
-  z-index: 0;
-  border: 8px solid #444;
+  border: 6px solid var(--border-light);
   border-radius: 8px;
-  box-sizing: border-box;
+  box-shadow: inset 0 0 25px #000;
+  z-index: 0;
 }
 
 .arena {
@@ -100,37 +147,30 @@ h1 {
   z-index: 1;
 }
 
+/* === FIGHTERS === */
 .fighter {
   position: absolute;
   bottom: 100px;
   width: 100px;
   height: 120px;
-  transition: transform 0.2s;
-  image-rendering: pixelated;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  image-rendering: pixelated;
+  transition: transform 0.2s;
 }
 
-#fighter1 {
-  left: 120px;
-}
-
-#fighter2 {
-  right: 120px;
-  transform: scaleX(-1);
-}
+#fighter1 { left: 120px; }
+#fighter2 { right: 120px; transform: scaleX(-1); }
 
 .fighter::before {
   content: '';
   display: block;
-  width: 44px;
-  height: 44px;
-  background: #222;
-  border-radius: 12px 12px 16px 16px;
-  margin-bottom: 0px;
-  box-shadow: 0 0 0 6px #fff inset;
+  width: 46px;
+  height: 46px;
+  background: #1b1b2f;
+  border-radius: 10px 10px 14px 14px;
+  box-shadow: 0 0 0 5px #fff inset;
 }
 
 #fighter1::after {
@@ -138,11 +178,10 @@ h1 {
   display: block;
   width: 38px;
   height: 60px;
-  background: linear-gradient(#ff4757 60%, #57606f 100%);
-  border-radius: 10px 10px 16px 16px;
-  margin-top: -8px;
-  box-shadow: 0 0 0 4px #fff inset;
-  border: 2px solid #c0392b;
+  background: linear-gradient(#ff6b6b 65%, #747d8c);
+  border-radius: 8px;
+  border: 2px solid var(--p1-color);
+  box-shadow: 0 0 0 3px #fff inset;
 }
 
 #fighter2::after {
@@ -150,13 +189,13 @@ h1 {
   display: block;
   width: 38px;
   height: 60px;
-  background: linear-gradient(#1e90ff 60%, #57606f 100%);
-  border-radius: 10px 10px 16px 16px;
-  margin-top: -8px;
-  box-shadow: 0 0 0 4px #fff inset;
-  border: 2px solid #1e90ff;
+  background: linear-gradient(#70a1ff 65%, #747d8c);
+  border-radius: 8px;
+  border: 2px solid var(--p2-color);
+  box-shadow: 0 0 0 3px #fff inset;
 }
 
+/* === HEALTH BARS === */
 .health-bars {
   position: absolute;
   top: 20px;
@@ -169,78 +208,89 @@ h1 {
 
 .hp-container {
   width: 350px;
-  height: 20px;
-  background: #555;
-  border-radius: 4px;
+  height: 22px;
+  background: #2f2f3d;
+  border-radius: 5px;
   display: flex;
   align-items: center;
-  padding: 0 12px;
-  box-sizing: border-box;
+  padding: 0 10px;
   gap: 8px;
+  border: 2px solid var(--border-light);
 }
 
 .hp-label {
-  font-size: 14px;
-  color: #f1f2f6;
-  text-shadow: 1px 1px #222;
+  font-size: 12px;
   min-width: 90px;
+  text-shadow: 1px 1px var(--shadow);
 }
 
 .hp-bar {
   flex: 1;
   height: 14px;
-  background: #333;
+  background: #00000066;
   border-radius: 3px;
   overflow: hidden;
-  margin-left: 6px;
 }
 
 .hp-fill {
   height: 100%;
   width: 100%;
-  transition: width 0.4s linear;
+  transition: width 0.3s ease-out;
 }
 
 .p1 .hp-fill {
-  background: linear-gradient(90deg, #ff6b6b, #c0392b);
+  background: linear-gradient(90deg, #ff6b6b, var(--p1-color));
 }
 
 .p2 .hp-fill {
-  background: linear-gradient(90deg, #70a1ff, #1e90ff);
+  background: linear-gradient(90deg, #70a1ff, var(--p2-color));
 }
 
+/* === FOOTER TEXT === */
 .footer-text {
   position: absolute;
-  bottom: 18px;
+  bottom: 20px;
   width: 100%;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   color: #f1f2f6;
-  text-shadow: 1px 1px #222;
+  text-shadow: 1px 1px var(--shadow);
   letter-spacing: 1px;
-  z-index: 3;
 }
 
-/* === KO & Overlay === */
+/* === DAMAGE FLOAT === */
+.damage-float {
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  transform: translate(-50%, 0);
+  font-size: 26px;
+  color: var(--p1-color);
+  text-shadow: 2px 2px #000;
+  opacity: 0;
+  z-index: 9;
+}
+
+/* === KO TEXT === */
 .ko-text {
   position: absolute;
   left: 50%;
-  top: 30%;
+  top: 40%;
   transform: translate(-50%, -50%);
-  font-size: 96px;
-  color: #fffa65;
-  text-shadow: 3px 3px #222, 0 0 12px #fffa65;
+  font-size: 92px;
+  color: var(--accent-yellow);
+  text-shadow: 4px 4px var(--shadow), 0 0 12px var(--accent-yellow);
   opacity: 0;
   pointer-events: none;
   animation: none;
   z-index: 10;
 }
 
+/* === OVERLAY === */
 .overlay {
   position: absolute;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(30,30,47,0.92);
+  inset: 0;
+  background: rgba(15, 15, 25, 0.94);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -249,69 +299,61 @@ h1 {
 }
 
 .winner-text {
-  font-size: 40px;
-  color: #fffa65;
-  text-shadow: 2px 2px #222;
-  margin-bottom: 40px;
-  letter-spacing: 2px;
+  font-size: 36px;
+  color: var(--accent-yellow);
+  text-shadow: 2px 2px var(--shadow);
+  margin-bottom: 32px;
 }
 
-/* === Damage Float === */
-.damage-float {
-  position: absolute;
-  left: 50%;
-  top: 60px;
-  transform: translate(-50%, 0);
-  font-size: 28px;
-  color: #ff4757;
-  text-shadow: 2px 2px #222;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 9;
-  font-family: 'Press Start 2P', monospace;
-  font-weight: bold;
-}
-
-/* === Animations === */
+/* === ANIMATIONS === */
 @keyframes punch {
   0% { transform: translateX(0); }
-  30% { transform: translateX(30px); }
-  60% { transform: translateX(-10px); }
+  25% { transform: translateX(25px); }
+  50% { transform: translateX(-10px); }
   100% { transform: translateX(0); }
 }
 
 @keyframes punch-left {
   0% { transform: translateX(0); }
-  30% { transform: translateX(-30px); }
-  60% { transform: translateX(10px); }
+  25% { transform: translateX(-25px); }
+  50% { transform: translateX(10px); }
   100% { transform: translateX(0); }
 }
 
 @keyframes hitFlash {
   0%, 100% { filter: none; }
-  50% { filter: brightness(2) saturate(2); }
+  50% { filter: brightness(1.8) contrast(1.3); }
 }
 
 @keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-10px); }
-  40% { transform: translateX(10px); }
-  60% { transform: translateX(-8px); }
-  80% { transform: translateX(8px); }
-  100% { transform: translateX(0); }
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
 @keyframes breathing {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-6px); }
+}
+
+/* === SETTINGS / CREDITS === */
+.credits {
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: center;
+  color: #dfe4ea;
+}
+
+.credits a {
+  color: var(--p2-color);
+  text-decoration: none;
+}
+
+.credits a:hover {
+  text-decoration: underline;
 }
