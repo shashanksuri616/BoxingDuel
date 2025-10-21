@@ -357,3 +357,27 @@ h1 {
 .credits a:hover {
   text-decoration: underline;
 }
+
+/* === Cooldown & Debug Visuals === */
+.fighter[data-cooldown="1"] {
+  opacity: 0.78;
+  filter: brightness(0.95) grayscale(0.05);
+  transition: opacity 0.12s, filter 0.12s;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.6) inset;
+}
+
+/* Container toggle for debug mode */
+.arena.debug .debug-hitbox {
+  position: absolute;
+  pointer-events: none;
+  z-index: 60;
+  border: 1px solid rgba(255, 0, 0, 0.9);
+  background: rgba(255, 0, 0, 0.18);
+  image-rendering: pixelated;
+}
+
+/* hit target box color variant */
+.arena.debug .debug-target {
+  border-color: rgba(0, 255, 0, 0.95);
+  background: rgba(0, 255, 0, 0.12);
+}

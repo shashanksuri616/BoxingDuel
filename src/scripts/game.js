@@ -398,6 +398,10 @@ function handlePunch(playerNum) {
     const attackBox = makeAttackHitbox(actorEl, isLeft);
     const targetBox = worldRect(targetEl);
 
+    // debug visualizations
+    drawDebugBox(attackBox, 'debug-hitbox');
+    drawDebugBox(targetBox, 'debug-target');
+
     // check collision using simple AABB
     const hit = detectCollision(attackBox, targetBox);
 
@@ -426,6 +430,47 @@ function handlePunch(playerNum) {
 
   // active window ends automatically; no further action needed
 }
+
+// --- Debug Hitbox Helpers ---
+let debugMode = false;
+const _debugEls = [];
+
+function clearDebug() {
+  while (_debugEls.length) {
+    const el = _debugEls.pop();
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+  }
+  arena.classList.remove('debug');
+}
+
+function drawDebugBox(box, className = 'debug-hitbox', lifetime = 800) {
+  if (!debugMode) return;
+  const el = document.createElement('div');
+  el.className = className;
+  el.style.left = box.x + 'px';
+  el.style.top = box.y + 'px';
+  el.style.width = box.width + 'px';
+  el.style.height = box.height + 'px';
+  arena.appendChild(el);
+  _debugEls.push(el);
+  setTimeout(() => {
+    if (el.parentNode) el.parentNode.removeChild(el);
+    const idx = _debugEls.indexOf(el);
+    if (idx >= 0) _debugEls.splice(idx, 1);
+  }, lifetime);
+}
+
+function toggleDebug() {
+  debugMode = !debugMode;
+  if (!debugMode) clearDebug();
+  else arena.classList.add('debug');
+  console.log('Debug hitboxes:', debugMode ? 'ON' : 'OFF');
+}
+
+// add key toggle (` key / Backquote)
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Backquote') toggleDebug();
+});
 
 // --- Input Handling ---
 const cleanupInput = setupInput(handlePunch);
