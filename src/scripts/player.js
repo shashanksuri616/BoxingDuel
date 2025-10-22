@@ -10,7 +10,7 @@ export class Player {
   }
 
   setHP(value) {
-    this.hp = Math.max(0, Math.min(this.maxHP, value));
+    this.hp = Math.max(0, Math.min(this.maxHP, Math.round(value)));
   }
 
   reset() {
@@ -20,5 +20,9 @@ export class Player {
 
   isAlive() {
     return this.hp > 0;
+  }
+
+  toJSON() {
+    return { name: this.name, hp: this.hp, maxHP: this.maxHP };
   }
 }

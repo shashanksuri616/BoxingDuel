@@ -1,36 +1,38 @@
-// Utility functions for the game
+// Small utility library for the game
 
-// Returns a random integer between min and max (inclusive)
+// random integer inclusive
 export function randomDamage(min = 5, max = 15) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Plays an audio element from the start
-export function playSound(audioElement) {
-  if (!audioElement) return;
-  audioElement.currentTime = 0;
-  audioElement.play();
+// safe audio play that handles promises/autoplay issues
+export async function safePlayAudio(audioEl, volume = 1) {
+  if (!audioEl) return;
+  try {
+    audioEl.volume = Math.max(0, Math.min(1, volume));
+    audioEl.currentTime = 0;
+    await audioEl.play();
+  } catch (err) {
+    // autoplay blocked or other play error — ignore silently
+    // console.debug('Audio play blocked', err);
+  }
 }
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+// Axis-aligned bounding box collision (simple)
+export function detectCollision(a, b) {
+  return !(a.x + a.width < b.x || b.x + b.width < a.x || a.y + a.height < b.y || b.y + b.height < a.y);
 }
 
-function detectCollision(rect1, rect2) {
-    return (
-        rect1.x < rect2.x + rect2.width &&
-        rect1.x + rect1.width > rect2.x &&
-        rect1.y < rect2.y + rect2.height &&
-        rect1.y + rect1.height > rect2.y
-    );
+// get element rect relative to containerRect
+export function rectRelativeTo(el, containerRect) {
+  const r = el.getBoundingClientRect();
+  return {
+    x: r.left - containerRect.left,
+    y: r.top - containerRect.top,
+    width: r.width,
+    height: r.height
+  };
 }
 
-function lerp(start, end, t) {
-    return start + (end - start) * t;
-}
-
-function clamp(value, min, max) {
-    return Math.max(min, Math.min(max, value));
-}
-
-export { getRandomInt, detectCollision, lerp, clamp };
+// clamp helper
+export function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
