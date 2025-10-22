@@ -3,25 +3,45 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#1e1e2f" />
   <title>Boxing Duel: Pixel Punch Arena</title>
   <meta name="description" content="Retro local 2-player boxing game. Press A / L to punch." />
+
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Preload important visuals -->
+  <link rel="preload" href="assets/sprites/glove_logo.svg" as="image">
+  <link rel="preload" href="assets/sprites/ring_pixel.svg" as="image">
+
+  <!-- Manifest (add manifest.webmanifest later for PWA) -->
+  <link rel="manifest" href="manifest.webmanifest">
+
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
+  <noscript>
+    <div style="background:#ff4757;color:#111;padding:12px;text-align:center;">
+      JavaScript is required to run the game. Enable JavaScript and reload.
+    </div>
+  </noscript>
+
   <!-- START SCREEN -->
   <main id="start-screen" class="screen" role="main" aria-labelledby="game-title">
     <div class="title-logo">
       <img src="assets/sprites/glove_logo.svg" alt="Glove logo" class="logo" width="80" height="80" />
       <h1 id="game-title">BOXING DUEL:<br>PIXEL PUNCH ARENA</h1>
       <p class="sub">Local 2-player — Press A / L to Punch</p>
-      <div class="controls-row">
+      <div class="controls-row" role="group" aria-label="Start controls">
         <button id="start-btn" class="btn primary">START FIGHT</button>
         <button id="settings-btn" class="btn">SETTINGS</button>
       </div>
     </div>
+
     <div class="start-bg-anim" aria-hidden="true"></div>
-    <audio id="bg-music" src="assets/sounds/bg_music.mp3" loop preload="auto"></audio>
+
+    <!-- background music (will play on user gesture) -->
+    <audio id="bg-music" src="assets/sounds/bg_music.mp3" loop preload="none" aria-hidden="true"></audio>
   </main>
 
   <!-- ARENA -->
@@ -31,11 +51,11 @@
     <div class="health-bars" role="status" aria-live="polite">
       <div class="hp-container p1" aria-label="Player 1 health">
         <span class="hp-label">PLAYER 1</span>
-        <div class="hp-bar"><div id="hp1" class="hp-fill" style="width:100%"></div></div>
+        <div class="hp-bar"><div id="hp1" class="hp-fill" style="width:100%" aria-hidden="true"></div></div>
       </div>
       <div class="hp-container p2" aria-label="Player 2 health">
         <span class="hp-label">PLAYER 2</span>
-        <div class="hp-bar"><div id="hp2" class="hp-fill" style="width:100%"></div></div>
+        <div class="hp-bar"><div id="hp2" class="hp-fill" style="width:100%" aria-hidden="true"></div></div>
       </div>
     </div>
 
@@ -46,26 +66,26 @@
       <div id="damage-float-1" class="damage-float" aria-hidden="true"></div>
       <div id="damage-float-2" class="damage-float" aria-hidden="true"></div>
 
-      <div id="ko-text" class="ko-text" aria-hidden="true"></div>
+      <div id="ko-text" class="ko-text" aria-hidden="true" role="status"></div>
     </div>
 
-    <div class="footer-text">Press <strong>A</strong> / <strong>L</strong> to Punch</div>
+    <div class="footer-text" aria-hidden="true">Press <strong>A</strong> / <strong>L</strong> to Punch</div>
 
     <!-- SFX -->
-    <audio id="punch-sound" src="assets/sounds/punch.wav" preload="auto"></audio>
-    <audio id="hit-sound" src="assets/sounds/hit.wav" preload="auto"></audio>
-    <audio id="ko-sound" src="assets/sounds/ko.wav" preload="auto"></audio>
-    <audio id="victory-sound" src="assets/sounds/victory.mp3" preload="auto"></audio>
+    <audio id="punch-sound" src="assets/sounds/punch.wav" preload="auto" aria-hidden="true"></audio>
+    <audio id="hit-sound" src="assets/sounds/hit.wav" preload="auto" aria-hidden="true"></audio>
+    <audio id="ko-sound" src="assets/sounds/ko.wav" preload="auto" aria-hidden="true"></audio>
+    <audio id="victory-sound" src="assets/sounds/victory.mp3" preload="auto" aria-hidden="true"></audio>
   </section>
 
   <!-- END / RESTART -->
-  <div id="end-overlay" class="overlay" style="display:none;" aria-hidden="true">
-    <div id="winner-text" class="winner-text" role="dialog"></div>
+  <div id="end-overlay" class="overlay" style="display:none;" aria-hidden="true" aria-modal="true" role="dialog">
+    <div id="winner-text" class="winner-text" role="status" aria-live="polite"></div>
     <button id="restart-btn" class="btn primary">RESTART?</button>
   </div>
 
   <!-- SETTINGS -->
-  <div id="settings-screen" class="overlay" style="display:none;" aria-hidden="true">
+  <div id="settings-screen" class="overlay" style="display:none;" aria-hidden="true" aria-modal="true" role="dialog">
     <div class="settings-panel">
       <h2>SETTINGS & CREDITS</h2>
       <div class="settings-body">
