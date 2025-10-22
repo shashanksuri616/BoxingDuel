@@ -1,94 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=900, initial-scale=1.0" />
-  <meta name="description" content="Boxing Duel: Pixel Punch Arena — a retro-style 2-player boxing game." />
-  <meta name="theme-color" content="#1e1e2e" />
-  <meta name="author" content="Your Name" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boxing Duel: Pixel Punch Arena</title>
-
-  <!-- Font -->
+  <meta name="description" content="Retro local 2-player boxing game. Press A / L to punch." />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <!-- Start Screen -->
-  <div id="start-screen" class="screen">
+  <!-- START SCREEN -->
+  <main id="start-screen" class="screen" role="main" aria-labelledby="game-title">
     <div class="title-logo">
-      <img src="assets/sprites/glove_logo.svg" alt="Glove Logo" class="logo">
-      <h1>BOXING DUEL:<br>PIXEL PUNCH ARENA</h1>
-      <div class="sub">Retro local 2-player arcade</div>
+      <img src="assets/sprites/glove_logo.svg" alt="Glove logo" class="logo" width="80" height="80" />
+      <h1 id="game-title">BOXING DUEL:<br>PIXEL PUNCH ARENA</h1>
+      <p class="sub">Local 2-player — Press A / L to Punch</p>
+      <div class="controls-row">
+        <button id="start-btn" class="btn primary">START FIGHT</button>
+        <button id="settings-btn" class="btn">SETTINGS</button>
+      </div>
     </div>
-
-    <div style="display:flex;flex-direction:column;align-items:center;">
-      <button id="start-btn" class="btn primary">START FIGHT</button>
-      <button id="settings-btn" class="btn secondary" style="margin-top:12px;">SETTINGS / CREDITS</button>
-    </div>
-
     <div class="start-bg-anim" aria-hidden="true"></div>
-
-    <!-- background music (autoplay blocked in many browsers; will play on user interaction) -->
     <audio id="bg-music" src="assets/sounds/bg_music.mp3" loop preload="auto"></audio>
-  </div>
+  </main>
 
-  <!-- Arena / Fight Screen -->
-  <div id="arena-screen" class="screen" style="display:none;">
+  <!-- ARENA -->
+  <section id="arena-screen" class="screen" aria-hidden="true" style="display:none;">
     <div class="arena-bg" aria-hidden="true"></div>
 
-    <div class="health-bars">
-      <div class="hp-container p1">
+    <div class="health-bars" role="status" aria-live="polite">
+      <div class="hp-container p1" aria-label="Player 1 health">
         <span class="hp-label">PLAYER 1</span>
-        <div class="hp-bar"><div class="hp-fill" id="hp1" style="width:100%"></div></div>
+        <div class="hp-bar"><div id="hp1" class="hp-fill" style="width:100%"></div></div>
       </div>
-
-      <div class="hp-container p2">
+      <div class="hp-container p2" aria-label="Player 2 health">
         <span class="hp-label">PLAYER 2</span>
-        <div class="hp-bar"><div class="hp-fill" id="hp2" style="width:100%"></div></div>
+        <div class="hp-bar"><div id="hp2" class="hp-fill" style="width:100%"></div></div>
       </div>
     </div>
 
-    <div class="arena" id="arena">
-      <div class="fighter" id="fighter1" aria-hidden="true"></div>
-      <div class="fighter" id="fighter2" aria-hidden="true"></div>
+    <div id="arena" class="arena" role="application" aria-label="Fight arena">
+      <div id="fighter1" class="fighter" aria-hidden="true" data-player="1"></div>
+      <div id="fighter2" class="fighter" aria-hidden="true" data-player="2"></div>
 
-      <div id="damage-float-1" class="damage-float"></div>
-      <div id="damage-float-2" class="damage-float"></div>
+      <div id="damage-float-1" class="damage-float" aria-hidden="true"></div>
+      <div id="damage-float-2" class="damage-float" aria-hidden="true"></div>
 
       <div id="ko-text" class="ko-text" aria-hidden="true"></div>
     </div>
 
-    <div class="footer-text">Press <b>A</b> / <b>L</b> to Punch</div>
+    <div class="footer-text">Press <strong>A</strong> / <strong>L</strong> to Punch</div>
 
     <!-- SFX -->
     <audio id="punch-sound" src="assets/sounds/punch.wav" preload="auto"></audio>
     <audio id="hit-sound" src="assets/sounds/hit.wav" preload="auto"></audio>
     <audio id="ko-sound" src="assets/sounds/ko.wav" preload="auto"></audio>
     <audio id="victory-sound" src="assets/sounds/victory.mp3" preload="auto"></audio>
-  </div>
+  </section>
 
-  <!-- End / Restart Overlay -->
-  <div id="end-overlay" class="overlay" style="display:none;">
-    <div id="winner-text" class="winner-text"></div>
+  <!-- END / RESTART -->
+  <div id="end-overlay" class="overlay" style="display:none;" aria-hidden="true">
+    <div id="winner-text" class="winner-text" role="dialog"></div>
     <button id="restart-btn" class="btn primary">RESTART?</button>
   </div>
 
-  <!-- Settings / Credits Screen -->
-  <div id="settings-screen" class="overlay" style="display:none;">
-    <div style="max-width:720px;padding:24px;text-align:center;color:#f1f2f6;">
-      <div class="winner-text" style="font-size:26px;margin-bottom:8px;">SETTINGS & CREDITS</div>
-
-      <div style="font-size:12px;line-height:1.6;margin-bottom:18px;">
-        <strong>Controls:</strong> Player 1: A &nbsp;|&nbsp; Player 2: L<br>
-        <strong>Audio:</strong> Toggle using browser player controls<br>
-        <strong>Art & Code:</strong> Your Name<br>
-        <strong>Assets:</strong> Placeholders — replace in src/assets/<br>
-        <strong>Font:</strong> Press Start 2P (Google Fonts)
+  <!-- SETTINGS -->
+  <div id="settings-screen" class="overlay" style="display:none;" aria-hidden="true">
+    <div class="settings-panel">
+      <h2>SETTINGS & CREDITS</h2>
+      <div class="settings-body">
+        <p><strong>Controls:</strong> Player 1 - A &nbsp;|&nbsp; Player 2 - L</p>
+        <p><strong>Audio:</strong> Use your system / browser controls</p>
+        <p><strong>Assets:</strong> Replace files in src/assets/</p>
+        <p class="muted">Built with Vite. Press ` (backquote) to toggle debug hitboxes.</p>
       </div>
-
-      <button id="close-settings-btn" class="btn">BACK</button>
+      <div class="settings-actions">
+        <button id="close-settings-btn" class="btn">BACK</button>
+      </div>
     </div>
   </div>
 
