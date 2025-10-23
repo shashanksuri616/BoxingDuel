@@ -6,50 +6,60 @@
 
 /* === GLOBAL STYLES === */
 :root{
-  --bg-a: #1e1e2f;
-  --bg-b: #2b2b52;
-  --ui-text: #f1f2f6;
-  --p1: #ff4757;
-  --p1-dark: #c0392b;
-  --p2: #1e90ff;
-  --p2-dark: #1a73d8;
-  --hp-bg: #333;
-  --arena-w: 900px;
-  --arena-h: 500px;
-  --font: 'Press Start 2P', monospace;
+  --bg-a:#1e1e2f; --bg-b:#2b2b52;
+  --ui-text:#f1f2f6;
+  --p1:#ff4757; --p1-dark:#c0392b;
+  --p2:#1e90ff; --p2-dark:#1a73d8;
+  --hp-bg:#333;
+  --arena-w:900px; --arena-h:500px;
+  --font:'Press Start 2P', monospace;
+  --transition-fast: .12s;
+  --transition-mid: .35s;
 }
 
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
 body{
-  background: linear-gradient(var(--bg-a), var(--bg-b));
+  background:linear-gradient(var(--bg-a),var(--bg-b));
   display:flex;align-items:center;justify-content:center;
   font-family:var(--font);color:var(--ui-text);overflow:hidden;
+  -webkit-font-smoothing:antialiased;
 }
 
 /* Screen container */
 .screen{
   width:var(--arena-w);max-width:95vw;height:var(--arena-h);position:relative;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
+  user-select:none;
 }
 
 /* Title */
 .title-logo{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
 .logo{image-rendering:pixelated;width:80px;height:80px}
 h1{font-size:32px;line-height:1;margin:0;text-shadow:2px 2px #000}
-.sub{font-size:12px;margin-top:-6px;color:var(--ui-text);opacity:0.9}
+.sub{font-size:12px;margin-top:-6px;color:var(--ui-text);opacity:.9}
+
+/* Controls row */
+.controls-row{display:flex;gap:10px;align-items:center}
 
 /* Buttons */
 .btn{
-  background:#ff4757;border:none;padding:10px 22px;border-radius:6px;color:white;cursor:pointer;
-  font-family:var(--font);font-size:12px;letter-spacing:1px;box-shadow:0 4px #111;transition:transform .12s,background .12s;
+  background:var(--p1);border:none;padding:10px 22px;border-radius:6px;color:white;cursor:pointer;
+  font-family:var(--font);font-size:12px;letter-spacing:1px;box-shadow:0 4px #111;transition:transform var(--transition-fast),background var(--transition-fast);
 }
 .btn:hover{transform:translateY(-2px)}
 .btn.primary{background:var(--p1)}
 .btn.secondary{background:#444}
 
+/* small touch buttons (created by input.js) */
+.touch-btn{
+  width:56px;height:56px;border-radius:8px;background:rgba(0,0,0,0.6);color:var(--ui-text);border:none;
+  font-family:var(--font);font-size:16px;box-shadow:0 4px rgba(0,0,0,0.6);
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);
+}
+
 /* Background animation */
-.start-bg-anim{position:absolute;inset:0;background:url('../assets/sprites/crowd_bg.svg') repeat-x center/auto;opacity:.18;z-index:0;image-rendering:pixelated}
+.start-bg-anim{position:absolute;inset:0;background:url('../assets/sprites/crowd_bg.svg') repeat-x center/auto;opacity:.18;z-index:0;image-rendering:pixelated;animation:crowdLoop 8s linear infinite}
 @keyframes crowdLoop{0%{background-position-x:0}100%{background-position-x:-400px}}
 
 /* Arena */
@@ -57,11 +67,11 @@ h1{font-size:32px;line-height:1;margin:0;text-shadow:2px 2px #000}
 .arena{position:relative;z-index:2;width:100%;height:100%}
 
 /* Fighters */
-.fighter{position:absolute;bottom:100px;width:100px;height:120px;transition:transform .12s;image-rendering:pixelated}
+.fighter{position:absolute;bottom:100px;width:100px;height:120px;transition:transform var(--transition-fast);image-rendering:pixelated;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
 #fighter1{left:120px}
 #fighter2{right:120px;transform:scaleX(-1)}
 
-/* placeholder pixel boxer pieces (keeps styling concise) */
+/* placeholder pixel boxer pieces */
 .fighter::before{content:'';display:block;width:44px;height:44px;background:#222;border-radius:12px 12px 16px 16px;margin:0 auto}
 #fighter1::after,#fighter2::after{content:'';display:block;width:38px;height:60px;margin:-8px auto 0;border-radius:10px 10px 16px 16px;box-shadow:0 0 0 4px #fff inset}
 #fighter1::after{background:linear-gradient(var(--p1) 60%, #57606f 100%);border:2px solid var(--p1-dark)}
@@ -72,7 +82,7 @@ h1{font-size:32px;line-height:1;margin:0;text-shadow:2px 2px #000}
 .hp-container{width:350px;height:20px;background:#555;border-radius:4px;display:flex;align-items:center;padding:0 10px;gap:8px}
 .hp-label{font-size:12px;min-width:90px}
 .hp-bar{flex:1;height:14px;background:var(--hp-bg);border-radius:3px;overflow:hidden;margin-left:6px}
-.hp-fill{height:100%;width:100%;transition:width .35s linear}
+.hp-fill{height:100%;width:100%;transition:width var(--transition-mid) linear}
 .p1 .hp-fill{background:linear-gradient(90deg,var(--p1),var(--p1-dark))}
 .p2 .hp-fill{background:linear-gradient(90deg,var(--p2),var(--p2-dark))}
 
@@ -84,9 +94,16 @@ h1{font-size:32px;line-height:1;margin:0;text-shadow:2px 2px #000}
 .overlay{position:absolute;inset:0;background:rgba(30,30,47,0.92);display:flex;align-items:center;justify-content:center;z-index:10}
 
 /* cooldown & debug */
-.fighter[data-cooldown="1"]{opacity:.84;filter:brightness(.95)}
-.arena.debug .debug-hitbox{position:absolute;pointer-events:none;border:1px dashed rgba(255,0,0,.9);background:rgba(255,0,0,.12);z-index=60}
+.fighter[data-cooldown="1"]{opacity:.84;filter:brightness(.95);transition:filter var(--transition-fast),opacity var(--transition-fast)}
+.arena.debug .debug-hitbox{position:absolute;pointer-events:none;border:1px dashed rgba(255,0,0,.9);background:rgba(255,0,0,.12);z-index:60}
 .arena.debug .debug-target{border-color:rgba(0,255,0,.9);background:rgba(0,255,0,.12)}
+
+/* Animations */
+@keyframes punch{0%{transform:translateX(0)}30%{transform:translateX(30px)}60%{transform:translateX(-10px)}100%{transform:translateX(0)}}
+@keyframes punch-left{0%{transform:translateX(0)}30%{transform:translateX(-30px)}60%{transform:translateX(10px)}100%{transform:translateX(0)}}
+@keyframes hitFlash{0%,100%{filter:none}50%{filter:brightness(2) saturate(1.2)}}
+@keyframes shake{0%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-8px)}80%{transform:translateX(8px)}100%{transform:translateX(0)}}
+@keyframes breathing{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
 /* responsive */
 @media (max-width:980px){
