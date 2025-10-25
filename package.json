@@ -1,19 +1,29 @@
 {
   "name": "boxing-duel-pixel-punch-arena",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Retro local 2-player boxing game (HTML5/JS) — dev/build scripts using Vite",
-  "author": "Your Name",
-  "license": "MIT",
+  "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
     "dev": "vite src --open",
     "build": "vite build --outDir dist",
     "preview": "vite preview --port 5000",
     "start": "npm run dev"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "vite": "^5.4.21"
+    "vite": "^7.1.11"
   },
-  "main": "index.js",
-  "keywords": []
+  "dependencies": {
+    "esbuild": "^0.25.11",
+    "fdir": "^6.5.0",
+    "nanoid": "^3.3.11",
+    "picocolors": "^1.1.1",
+    "picomatch": "^4.0.3",
+    "postcss": "^8.5.6",
+    "rollup": "^4.52.5",
+    "source-map-js": "^1.2.1",
+    "tinyglobby": "^0.2.15"
+  },
+  "description": ""
 }
