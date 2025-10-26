@@ -21,13 +21,11 @@ export async function safePlayAudio(audioEl, volume = 1) {
   if (!audioEl) return;
   try {
     audioEl.volume = Math.max(0, Math.min(1, volume));
-    // don't reset currentTime if playing and short sounds — but resetting is fine for SFX
     audioEl.currentTime = 0;
     const p = audioEl.play();
     if (p && typeof p.then === 'function') await p;
   } catch (err) {
-    // Autoplay blocked or other error; fail silently so game flow isn't interrupted
-    // console.debug('Audio play blocked or failed', err);
+    // Autoplay blocked or other error; fail silently
   }
 }
 
